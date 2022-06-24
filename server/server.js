@@ -19,6 +19,10 @@ function random(req, res) {
   res.send(list)
 }
 
+const cors = require('cors')
+
+app.use(cors()) // Use this after the variable declaration
+
 
 app.get('/', index)
 app.get('/random/:n', random)
