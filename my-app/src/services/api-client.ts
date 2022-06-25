@@ -1,8 +1,9 @@
 import axios from "axios"
+import { HOST_API } from "../config";
 
 const axiosApiInstance = axios.create();
 
-axiosApiInstance.defaults.baseURL = "http://localhost:3000"
+axiosApiInstance.defaults.baseURL = HOST_API
 
 axiosApiInstance.interceptors.request.use(
 
@@ -15,6 +16,6 @@ axiosApiInstance.interceptors.request.use(
   (error:any) => {
     Promise.reject(error)
   },
-)
+) 
 
 export default axiosApiInstance;
