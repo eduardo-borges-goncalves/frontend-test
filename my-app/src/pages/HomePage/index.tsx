@@ -1,23 +1,19 @@
-import { Grid, Typography } from "@material-ui/core"
+import { Container, Grid, Typography } from "@material-ui/core"
 import { useEffect, useState } from "react"
 import apiClient from "../../services/api-client"
 import { Drink } from "../../types/drink"
-import { Container, Header, useStyles } from "./styles"
+import { Table, Header, useStyles } from "./styles"
 
 // TASKS
 
-// Organize data to abv
 // Paginate
-// porcentagem alcoolica
-// negrito no alcoolico ou em outro lugar
-// corrigir o bug do texto do website
+// transform to table 
+// use description in that contid table 
 
 export const HomePage = () => {
   const [drinks, setDrinks] = useState([])
-  console.log(drinks);
 
   const classes = useStyles()
-
 
   const getDrinks = async () => {
     try {
@@ -33,71 +29,109 @@ export const HomePage = () => {
   }, [])
 
   return (
-    <Container>
-      <Grid container >
-        <Grid item xs={12}>
-          <Header container spacing={1}>
-            <Grid item xs={3} className={classes.alignCenter}>
-              <Typography variant="h4">
-                Drink
-              </Typography>
-            </Grid>
-            <Grid item xs={2} className={classes.alignCenter}>
-              <Typography variant="h4">
-                Alcoohol
-              </Typography>
-            </Grid>
-            <Grid item className={classes.alignCenter} xs={2}>
-              <Typography variant="h4">
-                Country
-              </Typography>
-            </Grid>
-            <Grid item className={classes.alignCenter} xs={2}>
-              <Typography variant="h4">
-                Category
-              </Typography>
-            </Grid>
-            <Grid item className={classes.alignCenter} xs={3}>
-              <Typography variant="h4">
-                Website
-              </Typography>
-            </Grid>
-          </Header>
-        </Grid>
-        {
-          drinks.map((drink: Drink) => (
+    <>
+      <Container>
+        <Typography
+          className={classes.mt}
+          variant="h3"
+          component="h1" >
+          The World 500 Most Alcoholic Drinks
+        </Typography>
+        <Table>
+          <Grid container >
             <Grid item xs={12} >
-              <Grid container spacing={1} className={classes.border}>
+              <Header container spacing={1}>
+                <Grid item xs={1} className={classes.alignCenter}>
+                  <Typography 
+                    display="block"
+                    noWrap variant="h6">
+                    Rank
+                  </Typography>
+                </Grid>
                 <Grid item xs={3} className={classes.alignCenter}>
-                  <Typography variant="body1">
-                    {drink.name}
+                  <Typography 
+                    display="block"
+                    noWrap variant="h6">
+                    Drink
                   </Typography>
                 </Grid>
-                <Grid item xs={2} className={classes.alignCenter}>
-                  <Typography variant="body1">
-                    {drink.abv.toFixed(2)}
+                <Grid item xs={1} className={classes.alignCenter}>
+                  <Typography 
+                    display="block"
+                    noWrap variant="h6">
+                    Alcoohol
                   </Typography>
                 </Grid>
                 <Grid item className={classes.alignCenter} xs={2}>
-                  <Typography variant="body1">
-                    {drink.country}
+                  <Typography 
+                    display="block"
+                    noWrap variant="h6">
+                    Country
                   </Typography>
                 </Grid>
                 <Grid item className={classes.alignCenter} xs={2}>
-                  <Typography variant="body1">
-                    {drink.category}
+                  <Typography 
+                    display="block"
+                    noWrap variant="h6">
+                    Category
                   </Typography>
                 </Grid>
                 <Grid item className={classes.alignCenter} xs={3}>
-                  <Typography variant="body1">
-                    {drink.website}
+                  <Typography 
+                    display="block"
+                    noWrap variant="h6">
+                    Website
                   </Typography>
                 </Grid>
-              </Grid>
+              </Header>
             </Grid>
-          ))
-        }
-      </Grid>
-    </Container>
+            {
+              drinks.map((drink: Drink, index) => (
+                <Grid key={index} item xs={12} >
+                  <Grid container spacing={1} className={classes.row}>
+                    <Grid item xs={1} className={classes.alignCenter}>
+                      <Typography
+                        className={classes.textRow} color="textPrimary" variant="body2" >
+                        {index + 1}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3} className={classes.alignCenter}>
+                      <Typography
+                        className={classes.textRow} color="textPrimary" variant="body2" >
+                        {drink.name}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={1} className={classes.alignCenter}>
+                      <Typography
+                        className={classes.textRow} color="textSecondary" variant="body2">
+                        {drink.abv.toFixed(2)}%
+                      </Typography>
+                    </Grid>
+                    <Grid item className={classes.alignCenter} xs={2}>
+                      <Typography
+                        className={classes.textRow} color="textSecondary" variant="body2">
+                        {drink.country || "Uninformed"}
+                      </Typography>
+                    </Grid>
+                    <Grid item className={classes.alignCenter} xs={2}>
+                      <Typography
+                        className={classes.textRow} color="textSecondary" variant="body2">
+                        {drink.category || "Uninformed"}
+                      </Typography>
+                    </Grid>
+                    <Grid item className={classes.alignCenter} xs={3}>
+                      <Typography
+                        className={classes.textRow} color="textSecondary" variant="body2">
+                        {drink.website || "Uninformed"}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              ))
+            }
+          </Grid>
+        </Table>
+      </Container>
+    </>
   )
 }
